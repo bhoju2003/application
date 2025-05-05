@@ -1,5 +1,11 @@
 FROM ubuntu
-RUN apt-get update
-RUN apt-get install apache2 -y
-ADD  ./var/www/html
-ENTRYPOINT apachectl -D FOREGROUND
+
+# Install Apache
+RUN apt-get update && apt-get install -y apache2
+
+# Copy your local web files into the container's Apache root
+# Make sure to specify the correct source path for your files
+COPY ./var/www/html /var/www/html
+
+# Start Apache in the foreground when the container runs
+ENTRYPOINT ["apachectl", "-D", "FOREGROUND"]
